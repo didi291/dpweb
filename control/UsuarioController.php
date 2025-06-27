@@ -21,10 +21,20 @@ if ($tipo == "registrar") {
     $password = password_hash($nro_doc, PASSWORD_DEFAULT);
 
     if ($nro_doc == "" || $razon_social == "" || $telefono == "" || $correo == "" || $departamento == "" || $provincia == "" || $distrito == "" || $cod_postal == "" || $direccion == "" || $rol == "") {
-        $arrResponse = array('status'=>false, 'msg'=>'Error, campos vacios');
-    }else{
-        $respuesta = $objPersona->registrar($nro_doc, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol, $password);
-        $arrResponse = array('status'=>true, 'msg'=>'Procedemos a registrar');
+        $arrResponse = array('status' => false, 'msg' => 'Error, campos vacios');
+    } else {
+        //validacion si existe persona con el mismo dni
+        $existePersona = $objPersona->existePersona($nro_doc);
+        if ($existePersona > 0) {
+            $arrResponse = array('status' => false, 'msg' => 'Error, nro de documento ya existe');
+        } else {
+            $respuesta = $objPersona->registrar($nro_doc, $razon_social, $telefono, $correo, $departamento, $provincia, $distrito, $cod_postal, $direccion, $rol, $password);
+            if ($respuesta) {
+                $arrResponse = array('status' => true, 'msg' => 'Registrado correctamente');
+            } else {
+                $arrResponse = array('status' => false, 'msg' => 'Error, fallo en el registro');
+            }
+        }
     }
     echo json_encode($arrResponse);
 }

@@ -15,11 +15,11 @@ function validar_form() {
         return;
     }
     
-    /*Swal.fire({
+    Swal.fire({
         title: "Drag me!",
         icon: "success",
         draggable: true
-    });*/
+    });
     registrarUsuario();
 }
 
@@ -43,6 +43,11 @@ async function registrarUsuario() {
             cache: 'no-cache',
             body: datos
         });
+        let json = await respuesta.json();
+        //validamos que json.status sea = true
+        if (json.status) { //true
+            sweetalert(json.msg);
+        }
     } catch (e) {
         console.log("Error al registrar Usuario:" + e);
     }

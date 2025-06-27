@@ -11,8 +11,9 @@ class Conexion
         if (mysqli_connect_errno()) {
             echo "Error de Conexión:" . mysqli_connect_errno();
         } else {
-            echo "Conexión exitosa";
+            echo "Conexión exitosa ";
         }
+        return $mysql;
     }
 }
 

@@ -10,8 +10,7 @@
         const base_url = '<?php echo BASE_URL; ?>';
     </script>
 </head>
-
-<body>
+<body> 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Logo</a>
