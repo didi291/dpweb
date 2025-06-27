@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +39,7 @@
 </head>
 <body>
     <div class="error-container">
-        <img src="img/netflix.jpg" alt="netflix" style="width: 100%; height: auto; border-radius: 10px;">
+        <img src="view/img/netflix.jpg" alt="netflix" style="width: 100%; height: auto; border-radius: 10px;">
         <h1>404</h1>
         <p>Error: Página no encontrada. Probablemente esté viendo Netflix en lugar de trabajar</p>
         <p>¡Vuelve al trabajo o al menos a la página principal!</p>
