@@ -14,7 +14,7 @@ function validar_form() {
         alert("Error: Existen campos vacios");
         return;
     }
-    
+
     Swal.fire({
         title: "Drag me!",
         icon: "success",
@@ -46,8 +46,13 @@ async function registrarUsuario() {
         let json = await respuesta.json();
         //validamos que json.status sea = true
         if (json.status) { //true
-            sweetalert(json.msg);
+            alert(json.msg);
+            document.getElementById('frm_user').reset();
+        } else {
+            alert(json.msg);
         }
+
+
     } catch (e) {
         console.log("Error al registrar Usuario:" + e);
     }
