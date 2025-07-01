@@ -8,8 +8,6 @@ function validar_form() {
          Swal.fire({
             icon: 'warning',
             title: 'Campos vacíos',
-            text: 'Por favor, complete todos los campos requeridos',
-            confirmButtonText: 'Entendido'
         });
         return;
     }
