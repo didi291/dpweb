@@ -1,6 +1,5 @@
 <?php
 require_once "../config/config.php";
-
 class Conexion
 {
     public static function connect()
@@ -9,11 +8,8 @@ class Conexion
         $mysql->set_charset(BD_CHARSET);
         date_default_timezone_set("America/Lima");
         if (mysqli_connect_errno()) {
-            echo "Error de Conexión:" . mysqli_connect_errno();
-        } else {
-            echo "Conexión exitosa ";
+            die("conexion fallida" . mysqli_connect_errno());
         }
         return $mysql;
     }
 }
-

@@ -1,5 +1,5 @@
 function validar_form() {
-    let nro_doc = document.getElementById("nro_doc").value;
+    let nro_identidad = document.getElementById("nro_identidad").value;
     let razon_social = document.getElementById("razon_social").value;
     let telefono = document.getElementById("telefono").value;
     let correo = document.getElementById("correo").value;
@@ -10,7 +10,7 @@ function validar_form() {
     let direccion = document.getElementById("direccion").value;
     let rol = document.getElementById("rol").value;
 
-    if (nro_doc == "" || razon_social == "" || telefono == "" || correo == "" || departamento == "" || provincia == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
+    if (nro_identidad == "" || razon_social == "" || telefono == "" || correo == "" || departamento == "" || provincia == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
         alert("Error: Existen campos vacios");
         return;
     }
@@ -57,3 +57,6 @@ async function registrarUsuario() {
         console.log("Error al registrar Usuario:" + e);
     }
 }
+
+
+
