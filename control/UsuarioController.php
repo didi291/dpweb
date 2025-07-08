@@ -5,7 +5,6 @@ $objPersona = new UsuarioModel();
 
 $tipo = $_GET['tipo'];
 
-<<<<<<< HEAD
 if ($tipo == 'registrar') {
    // print_r ($_POST);
    $nro_identidad = $_POST['nro_identidad'];
@@ -40,7 +39,6 @@ if ($tipo == 'registrar') {
    }
    echo json_encode($arrResponse);
 }
-=======
 if ($tipo == "registrar") {
     //print_r($_POST);
     $nro_identidad = $_POST['nro_identidad'];
@@ -74,4 +72,3 @@ if ($tipo == "registrar") {
     }
     echo json_encode($arrResponse);
 }
->>>>>>> 557063eea8ebf48d2f6bec87978790e117095317
