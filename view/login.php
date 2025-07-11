@@ -19,7 +19,7 @@
         .image-container {
             width: 100%;
             height: 200px;
-            background-image: url('img/img2.webp');
+            background-image: url('view/img/img2.webp');
             background-size: cover;
             background-position: center;
             border-radius: 10px;
