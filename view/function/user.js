@@ -14,7 +14,6 @@ function validar_form() {
         alert("Error: Existen campos vacios");
         return;
     }
-
     Swal.fire({
         title: "Drag me!",
         icon: "success",
@@ -22,7 +21,6 @@ function validar_form() {
     });
     registrarUsuario();
 }
-
 if (document.querySelector('#frm_user')) {
     //evita que se envie el formulario
     let frm_user = document.querySelector('#frm_user');
@@ -31,13 +29,12 @@ if (document.querySelector('#frm_user')) {
         validar_form();
     }
 }
-
 async function registrarUsuario() {
     try {
         //capturar campos de formulario (HTML)
         const datos = new FormData(frm_user);
         //enviar datos hacia el controlador
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {
+        let respuesta = await fetch(base_url+'control/UsuarioController.php?tipo=registrar', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -52,9 +49,28 @@ async function registrarUsuario() {
             alert(json.msg);
         }
 
-
     } catch (e) {
         console.log("Error al registrar Usuario:" + e);
+    }
+}
+
+async function iniciar_sesion() {
+    let usuario = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    if (usuario == "" || password == "") {
+        alert("Error, campos vacios!");
+        return;
+    }
+    try {
+        const datos = new FormData(frm_login);
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=iniciar_sesion', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+    } catch (error) {
+        console.log(error);
     }
 }
 

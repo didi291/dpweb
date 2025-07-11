@@ -8,7 +8,7 @@ class viewControl extends viewModel
     }
     public function getViewControl()
     {
-        session_start()
+        session_start();
         if (isset($_SESSION['ventas_id'])){
             if (isset($_GET["views"])) {
             $ruta = explode("/", $_GET["views"]);
