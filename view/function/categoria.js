@@ -1,4 +1,3 @@
-
 function validar_form() {
     let nombre = document.getElementById("nombre").value;
     let detalle = document.getElementById("detalle").value;
@@ -10,6 +9,8 @@ function validar_form() {
             title: 'Campos vacíos',
             text: 'Por favor, complete todos los campos requeridos',
             confirmButtonText: 'Entendido'
+
+
         });
         return;
     }
@@ -44,4 +45,6 @@ async function registrarCategoria() {
     } catch (error) {
         console.log("error al registar categoria:" + error); 
     }
+
 }
+
