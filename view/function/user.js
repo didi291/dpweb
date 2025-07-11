@@ -48,7 +48,6 @@ async function registrarUsuario() {
         } else {
             alert(json.msg);
         }
-
     } catch (e) {
         console.log("Error al registrar Usuario:" + e);
     }
@@ -69,6 +68,15 @@ async function iniciar_sesion() {
             cache: 'no-cache',
             body: datos
         });
+        //--------------------------
+        let json = await respuesta.json();
+        //validamos que json.status sea = true
+        if (json.status) { //true
+            location.replace(base_url + 'new-user');
+        } else {
+            alert(json.msg);
+        }
+        
     } catch (error) {
         console.log(error);
     }
