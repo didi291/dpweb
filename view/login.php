@@ -21,6 +21,10 @@
             padding: 0px;
         }
 
+        nav {
+            display: none !important;
+        }
+
         .image-container {
             width: 100%;
             height: 200px;

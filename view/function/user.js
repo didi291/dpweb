@@ -1,4 +1,4 @@
-function validar_form() {
+function validar_form() {//obtienenos los valores de los campos del formulario y valida que no esten vacios
     let nro_identidad = document.getElementById("nro_identidad").value;
     let razon_social = document.getElementById("razon_social").value;
     let telefono = document.getElementById("telefono").value;
@@ -9,7 +9,7 @@ function validar_form() {
     let cod_postal = document.getElementById("cod_postal").value;
     let direccion = document.getElementById("direccion").value;
     let rol = document.getElementById("rol").value;
-
+    //si algun campo esta vacio, muestra un alerta de error y detiene la ejecucion
     if (nro_identidad == "" || razon_social == "" || telefono == "" || correo == "" || departamento == "" || provincia == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
         alert("Error: Existen campos vacios");
         return;
@@ -34,7 +34,7 @@ async function registrarUsuario() {
         //capturar campos de formulario (HTML)
         const datos = new FormData(frm_user);
         //enviar datos hacia el controlador
-        let respuesta = await fetch(base_url+'control/UsuarioController.php?tipo=registrar', {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {//fetch sirve para enviar y recibir datos sin recargar la  pagina
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -54,7 +54,7 @@ async function registrarUsuario() {
 }
 
 async function iniciar_sesion() {
-    let usuario = document.getElementById("username").value;
+    let usuario = document.getElementById("username").value;//obtiene los valores del login
     let password = document.getElementById("password").value;
     if (usuario == "" || password == "") {
         alert("Error, campos vacios!");
@@ -76,10 +76,26 @@ async function iniciar_sesion() {
         } else {
             alert(json.msg);
         }
-        
+
     } catch (error) {
         console.log(error);
     }
+}
+
+
+async function ver_usuarios() {
+    try {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_usuarios', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+    } catch (error) {
+
+    }
+}
+if (document.getElementById('content_users')) {
+    ver_usuarios();
 }
 
 

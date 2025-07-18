@@ -8,7 +8,7 @@ $mostrar = $view->getViewControl();
 if ($mostrar == "login" || $mostrar == "404") {
     require_once "./view/".$mostrar.".php";
 }else{
-    include "./view/include/header.php";//cargamos el header
-    include "./view/include/footer.php";//cargamos el footer
-    include $mostrar;
+    include "./view/include/header.php"; //cargamos el header
+    include $mostrar; //cargamos la vista correspondiente
+    include "./view/include/footer.php"; //cargamos el footer
 }
