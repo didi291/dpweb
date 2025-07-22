@@ -96,33 +96,32 @@ async function ver_usuarios() {
         let json = await respuesta.json();
 
         // Obtiene el elemento HTML con id 'content_users' (una tabla probablemente)
-        let content_users = document.getElementById('content_users');  
+        let content_users = document.getElementById('content_users');
 
         // Limpia el contenido actual de la tabla (por si ya hay datos anteriores)
         content_users.innerHTML = '';
 
         // Recorre cada usuario recibido en el JSON
-        json.forEach((user, index) => {
+        json.forEach((usuarios, index) => {
             // Crea una fila nueva de tabla
             let fila = document.createElement('tr');
-
             // Define el contenido HTML de la fila con los datos del usuario
             fila.innerHTML = `
                 <td>${index + 1}</td>
-                <td>${user.nro_identidad}</td>
-                <td>${user.razon_social}</td>
-                <td>${user.correo}</td>
-                <td>${user.rol}</td>
-                <td>${user.estado}</td>
+                <td>${usuarios.nro_identidad}</td>
+                <td>${usuarios.razon_social}</td>
+                <td>${usuarios.correo}</td>
+                <td>${usuarios.rol}</td>
+                <td>${usuarios.estado}</td>
+                <td>
+                    <a href="`+ base_url+`edit_user/`+usuarios.id+`">Editar</a>
+                </td>
             `;
-
-            // Agrega la fila creada a la tabla en el DOM
             content_users.appendChild(fila);
         });
 
     } catch (error) {
-        // Si ocurre un error en el fetch o en el JSON, se captura aquí (aunque no se muestra nada)
-        // Podrías agregar un console.error(error) aquí para ver el problema
+        console.log(error);
     }
 }
 
