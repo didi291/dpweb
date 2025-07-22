@@ -82,21 +82,55 @@ async function iniciar_sesion() {
     }
 }
 
-
+// Función asincrónica para ver usuarios
 async function ver_usuarios() {
     try {
+        // Espera la respuesta de la petición fetch a la URL con el parámetro tipo=ver_usuarios
         let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_usuarios', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache'
+            method: 'POST',         // Se usa el método POST para enviar la solicitud
+            mode: 'cors',           // 'cors' permite solicitudes a dominios distintos si están permitidos
+            cache: 'no-cache'       // No se almacena en caché la respuesta (siempre pide datos nuevos)
         });
-    } catch (error) {
 
+        // Convierte la respuesta del servidor a formato JSON
+        let json = await respuesta.json();
+
+        // Obtiene el elemento HTML con id 'content_users' (una tabla probablemente)
+        let content_users = document.getElementById('content_users');  
+
+        // Limpia el contenido actual de la tabla (por si ya hay datos anteriores)
+        content_users.innerHTML = '';
+
+        // Recorre cada usuario recibido en el JSON
+        json.forEach((user, index) => {
+            // Crea una fila nueva de tabla
+            let fila = document.createElement('tr');
+
+            // Define el contenido HTML de la fila con los datos del usuario
+            fila.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${user.nro_identidad}</td>
+                <td>${user.razon_social}</td>
+                <td>${user.correo}</td>
+                <td>${user.rol}</td>
+                <td>${user.estado}</td>
+            `;
+
+            // Agrega la fila creada a la tabla en el DOM
+            content_users.appendChild(fila);
+        });
+
+    } catch (error) {
+        // Si ocurre un error en el fetch o en el JSON, se captura aquí (aunque no se muestra nada)
+        // Podrías agregar un console.error(error) aquí para ver el problema
     }
 }
+
+// Si existe el elemento con id 'content_users' en el HTML, llama a la función ver_usuarios()
 if (document.getElementById('content_users')) {
     ver_usuarios();
 }
+
 
 
 

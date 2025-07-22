@@ -25,7 +25,7 @@ if ($tipo == 'registrar') {
     } else {
         //validacion si existe la misma persona con el mismo dni
         $existePersona = $objPersona->existePersona($nro_identidad);
-        if (!$existePersona ) {
+        if ($existePersona ) {
             $arrResponse = array('status' => false, 'msg' => 'Error, nro de documento ya existe');//verifica si ya hay una persona con nro_identidad usando el modelo, si ya existe envia error
         } else {
 
