@@ -1,7 +1,7 @@
 <?php
 class viewModel {//decla la clase viewModel que contiene las funciones para manejar las vistas
     protected static function get_view($view){//define una funcion estatica protegida llamada get_view que recibe un nombre de vista
-        $white_list = ["login", "home", "products", "users", "new-user", "new-categoria"];//lista blanca de vistas permitidas
+        $white_list = ["login", "home", "products", "users", "new-user", "edit-user", "new-categoria"];//lista blanca de vistas permitidas
         if (in_array($view, $white_list)) {//verifica si la vista solicitada esta en la lista blanca
             //si el archivo existe en la carpeta view/ guarda su ruta en content. si no existe guarda "404" en content
             if (is_file("./view/".$view.".php")) {
