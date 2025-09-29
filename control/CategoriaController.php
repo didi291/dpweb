@@ -29,11 +29,12 @@ if ($tipo == "registrar") {
 }
 if ($tipo == "ver_categoria") {
     $categoria = $objCategoria->verCategoria();
-    echo json_encode($categoria);
+    $respuesta = array('status' => true, 'msg' => '', 'data' => $categoria);
+    echo json_encode($respuesta);
 }
 if ($tipo == "ver") {
     //print_r($_POST);
-    $respuesta = array('status' => false, 'msg' => '');
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $id_categoria = $_POST['id_categoria'];
     $categoria = $objCategoria->ver($id_categoria);
     if ($categoria) {

@@ -37,7 +37,9 @@
                 <div class="mb-3 row">
                     <label for="id_categoria" class="col-sm-4 col-form-label">Categoria :</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" id="id_categoria" name="id_categoria" required>
+                        <select class="form-select" name="id_categoria" id="id_categoria" required>
+                            <option value="" disabled selected>Seleccione</option>
+                        </select>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -67,3 +69,6 @@
 </div>
 <!-- FIN DE CUERPO DE PÁGINA -->
 <script src="<?php echo BASE_URL; ?>view/function/product.js"></script>
+<script>
+    cargar_categoria();
+</script>

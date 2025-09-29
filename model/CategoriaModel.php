@@ -23,7 +23,7 @@ class CategoriaModel{
 
     }
     public function verCategoria(){
-        $consulta = "SELECT * FROM categoria";
+        $consulta = "SELECT * FROM categoria WHERE rol='Proveedor'";
         $sql = $this->conexion->query($consulta);
         $data = array();
         if ($sql) {

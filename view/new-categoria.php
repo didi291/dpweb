@@ -21,6 +21,7 @@
                 <button type="submit" class="btn btn-success">Registrar</button>
                 <button type="reset" class="btn btn-info" reset>Limpiar</button>
                 <button type="button" class="btn btn-danger">Cancelar</button>
+                <button type="submit" class="btn btn-success">Lista de Categorias</button>
             </div>
         </form>
     </div>

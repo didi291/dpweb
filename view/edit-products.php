@@ -8,7 +8,7 @@
             //echo $ruta[1];
         }
         ?>
-        <form id="frm_edit_products" action="" method="">
+        <form id="frm_edit_product" action="" method="">
             <input type="hidden" id="id" name="id" value="<?= $ruta[1]; ?>">
             <div class="card-body">
                 <div class="mb-3 row">
@@ -57,13 +57,6 @@
                     <label for="fecha_vencimiento" class="col-sm-4 col-form-label">Fecha de Vencimiento :</label>
                     <div class="col-sm-8">
                         <input type="date" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" required>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="id_proveedor" class="col-sm-4 col-form-label">ID Proveedor :</label>
-                    <div class="col-sm-8">
-                        <input type="number" class="form-control" id="id_proveedor" name="id_proveedor" required>
                     </div>
                 </div>
 

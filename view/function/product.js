@@ -35,7 +35,7 @@ async function view_product() {
     }
 }
 if (document.getElementById('content_product')) {
-    view_products();
+    view_product();
 }
 
 function validar_form(tipo) {
@@ -95,4 +95,19 @@ async function registrarProducto() {
     } catch (e) {
         console.log("Error al registrar Producto:" + e);
     }
+}
+
+async function cargar_categoria() {
+    let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categoria', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+    });
+    let json = await respuesta.json();
+    let contenido = '<option>Seleccione</option>';
+    json.data.forEach(categoria => {
+        contenido += '<option value="">'+categoria.nombre+'</option>';
+    });
+    //console.log(contenido);
+    document.getElementById("id_categoria").innerHTML = contenido;
 }
