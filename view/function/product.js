@@ -112,7 +112,7 @@ async function cargar_categoria() {
     document.getElementById("id_categoria").innerHTML = contenido;
 }
 
-/*async function cargar_proveedores() {
+async function cargar_proveedores() {
     let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores', {
         method: 'POST',
         mode: 'cors',
@@ -125,12 +125,12 @@ async function cargar_categoria() {
     });
     //console.log(contenido);
     document.getElementById("id_proveedor").innerHTML = contenido;
-}*/
+}
 
-async function cargarProveedores() {
+/*async function cargarProveedores() {
   let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
   let json = await respuesta.json();
   let h = '<option value="">Seleccione Proveedor</option>';
   json.data.forEach(proveedor => h += `<option value="${proveedor.id}">${proveedor.razon_social}</option>`);
   document.getElementById("id_persona").innerHTML = h;
-}
+}*/
