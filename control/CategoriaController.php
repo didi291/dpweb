@@ -75,28 +75,14 @@ if ($tipo == "actualizar") {
     }
 }
 if ($tipo == "eliminar") {
+    //print_r($_POST);
     $id_categoria = $_POST['id_categoria'];
-    if ($id_categoria == "") {
-        $arrResponse = array('status' => false, 'msg' => 'Error, ID vacío');
-        echo json_encode($arrResponse);
-        exit;
-    } else {
-        // Verificar si el usuario existe
-        $existeID = $objCategoria->ver($id_categoria);
-        if (!$existeID) {
-            $arrResponse = array('status' => false, 'msg' => 'Error, la categoria no existe en la base de datos');
-            echo json_encode($arrResponse);
-            exit;
-        } else {
-            // Eliminar categoria
-            $eliminar = $objCategoria->eliminar($id_categoria);
-            if ($eliminar) {
-                $arrResponse = array('status' => true, 'msg' => 'Categoria eliminada correctamente');
-            } else {
-                $arrResponse = array('status' => false, 'msg' => 'Error al eliminar la categoria');
-            }
-            echo json_encode($arrResponse);
-            exit;
-        }
+    $respuesta = array('status' => false, 'msg' => '');
+    $resultado = $objCategoria->eliminar($id_categoria);
+    if ($resultado) {
+        $respuesta = array('status' => true, 'msg' => 'Eliminado Correctamente');
+    }else {
+        $respuesta = array('status' => false, 'msg' => $resultado);
     }
+    echo json_encode($respuesta);
 }

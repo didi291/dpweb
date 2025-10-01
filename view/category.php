@@ -9,7 +9,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="content_categories">
+        <tbody id="content_category">
         </tbody>
     </table>
 </div>

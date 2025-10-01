@@ -65,4 +65,15 @@ class UsuarioModel //define la clase donde estaran todas las funciones relaciona
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
+    // ver proveedor
+    public function verProveedores()
+    {
+        $arr_proveedor = array();
+        $consulta = "SELECT id, razon_social FROM persona WHERE rol = 'Proveedor'";
+        $sql = $this->conexion->query($consulta);
+        while ($objeto = $sql->fetch_object()) {
+            $arr_proveedor[] = $objeto;
+        }
+        return $arr_proveedor;
+    }
 }

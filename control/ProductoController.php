@@ -73,7 +73,7 @@ if ($tipo === "registrar") {
         echo json_encode(['status' => true, 'msg' => 'Registrado correctamente', 'id' => $id, 'img' => $rutaRelativa]);
     } else {
         @unlink($rutaFisica); // revertir archivo si falló BD
-        echo json_encode(['status' => false, 'msg' => 'Error, falló en registro']);
+        echo json_encode(['status' => false, 'msg' => 'Error, falló en registrar']);
     }
     exit;
 }

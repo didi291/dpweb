@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success">Actualizar</button>
-                <a href="<?= BASE_URL ?>categories" class="btn btn-danger">Cancelar</a>
+                <a href="<?= BASE_URL ?>category" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>

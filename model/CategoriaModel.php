@@ -23,7 +23,7 @@ class CategoriaModel{
 
     }
     public function verCategoria(){
-        $consulta = "SELECT * FROM categoria WHERE rol='Proveedor'";
+        $consulta = "SELECT * FROM categoria";
         $sql = $this->conexion->query($consulta);
         $data = array();
         if ($sql) {
@@ -33,25 +33,22 @@ class CategoriaModel{
         }
         return $data;
     }
-    public function ver($id_categoria){
-        $consulta = "SELECT * FROM categoria WHERE id_categoria='$id_categoria'";
-        $sql = $this->conexion->query($consulta);
-        if ($sql->num_rows > 0) {
-            $data = $sql->fetch_assoc();
-        }else{
-            $data = 0;
-        }
-        return $data;
-    }
-    public function actualizar($id_categoria, $nombre, $detalle){
-        $consulta = "UPDATE categoria SET nombre='$nombre', detalle='$detalle' WHERE id_categoria='$id_categoria'";
-        $sql = $this->conexion->query($consulta);
-        return $sql;
-    }
-    public function eliminar($id)
+      public function ver($id_categoria)
     {
-        $consulta = "DELETE FROM categoria WHERE id = '$id'";
+        $consulta = "SELECT * FROM categoria WHERE id='$id_categoria'";
+        $sql = $this->conexion->query($consulta);
+        return $sql->fetch_object();
+    }
+
+    public function actualizar($id_categoria, $nombre, $detalle) {
+        $consulta = "UPDATE categoria SET nombre='$nombre', detalle='$detalle' WHERE id='$id_categoria'";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
+     public function eliminar($id){
+        $consulta = "DELETE FROM categoria WHERE id='$id'";
+        $sql = $this->conexion->query($consulta);
+        return $sql;
+    }
+    
 }

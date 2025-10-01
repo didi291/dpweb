@@ -60,45 +60,52 @@ async function registrarCategoria() {
         console.log("error al registrar categoría: " + error);
     }
 }
-async function ver_categorias() {
+
+async function ver_categoria() {
     try {
-        let respuesta = await fetch(base_url + 'control/categoriaController.php?tipo=ver_categoria', {
+        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categoria', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache'
         });
-        let json = await respuesta.json();
-        let content_categories = document.getElementById('content_categories');
-        content_categories.innerHTML = '';
-        json.forEach((categoria, index) => {
-            let fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${categoria.nombre}</td>
-                <td>${categoria.detalle}</td>
-                <td>
-                    <a href="${base_url}edit-category/${categoria.id_categoria}">Editar</a>
-                    <button type="button" class="btn btn-danger" onclick="eliminarCategoria(${categoria.id_categoria})">Eliminar</button>
-                </td>`;
-            content_categories.appendChild(fila);
-        });
+        json = await respuesta.json();
+        contenidot = document.getElementById('content_category');
+        if (json.status) {
+            let cont = 1;
+            json.data.forEach(categoria => {
+                
+                let nueva_fila = document.createElement("tr");
+                nueva_fila.id = "fila" + categoria.id;
+                nueva_fila.className = "filas_tabla";
+                nueva_fila.innerHTML = `
+                            <td>${cont}</td>
+                            <td>${categoria.nombre}</td>
+                            <td>${categoria.detalle}</td>
+                            <td>
+                                <a href="`+ base_url + `edit-category/` + categoria.id + `">Editar</a>
+                                <button class="btn btn-danger" onclick="fn_eliminar(` + categoria.id + `);">Eliminar</button>
+                            </td>
+                `;
+                cont++;
+                contenidot.appendChild(nueva_fila);
+            });
+        }
     } catch (error) {
-        console.log(error);
+        console.log('error en mostrar categoria ' + error);
     }
 }
+if (document.getElementById('content_category')) {
+    ver_categoria();
+}
+
 
 // Llamar a la función al cargar la página
 document.addEventListener('DOMContentLoaded', function () {
     ver_categorias();
 });
-
-async function edit_category() {
+async function edit_categoria() {
     try {
         let id_categoria = document.getElementById('id_categoria').value;
-        if (!id_categoria) {
-            console.log('ID de categoría no encontrado');
-            return;
-        }
         const datos = new FormData();
         datos.append('id_categoria', id_categoria);
 
@@ -108,54 +115,42 @@ async function edit_category() {
             cache: 'no-cache',
             body: datos
         });
-        let json = await respuesta.json(); // Asignar el resultado a una variable local
+        json = await respuesta.json();
         if (!json.status) {
             alert(json.msg);
             return;
         }
-        document.getElementById('id_categoria').value = json.data.id_categoria;
         document.getElementById('nombre').value = json.data.nombre;
         document.getElementById('detalle').value = json.data.detalle;
     } catch (error) {
-        console.log('Error al cargar la categoría: ' + error);
+        console.log('oops, ocurrió un error ' + error);
+    }
+}
+if (document.querySelector('#frm_edit_category')) {
+    edit_categoria();
+    // evita que se envie el formulario
+    let frm_user = document.querySelector('#frm_edit_category');
+    frm_user.onsubmit = function (e) {
+        e.preventDefault();
+        validar_form("actualizar");
     }
 }
 
-// Llamar a edit_category() cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', function () {
-    if (document.getElementById('frm_edit_category')) {
-        edit_category();
-    }
-});
-
 async function actualizarCategoria() {
-    try {
-        const datos = new FormData(document.getElementById('frm_edit_category'));
-        let respuesta = await fetch(base_url + 'control/categoriaController.php?tipo=actualizar', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: datos
-        });
-        let json = await respuesta.json();
-        if (json.status) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: json.msg,
-                confirmButtonText: 'OK'
-            });
-            window.location.href = base_url + 'categories'; // Redirigir a la lista
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: json.msg,
-                confirmButtonText: 'OK'
-            });
-        }
-    } catch (error) {
-        console.log('Error al actualizar categoría: ' + error);
+    const datos = new FormData(frm_edit_category);
+    let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=actualizar', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        body: datos
+    });
+    json = await respuesta.json();
+    if (!json.status) {
+        alert("Oooooops, ocurrio un error al actualizar, intentelo nuevamente");
+        console.log(json.msg);
+        return;
+    }else{
+        alert(json.msg);
     }
 }
 
@@ -179,30 +174,29 @@ function validar_form(tipo = "nuevo") {
         registrarCategoria(); // Para el caso de nuevo registro, si aplica
     }
 }
-
-async function eliminarCategoria(id) {
-    // Preguntar antes de eliminar
-    const confirmar = confirm("¿Estás seguro de que deseas eliminar esta categoria?");
-    if (!confirmar) {
-        return; // si el usuario presiona "Cancelar", no hace nada más
+async function fn_eliminar(id) {
+    if (window.confirm("Confirmar eliminar?")) {
+        eliminar(id);
     }
-    const datos = new FormData();
+}
+async function eliminarCategoria(id) {
+    let datos = new FormData();
     datos.append('id_categoria', id);
-
     let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=eliminar', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
         body: datos
     });
-
-    let json = await respuesta.json();
+    json = await respuesta.json();
     if (!json.status) {
-        alert("Ooops, ocurrió un error al eliminar, inténtalo nuevamente");
+        alert("Oooooops, ocurrio un error al eliminar categhoria, intentelo mas tarde");
         console.log(json.msg);
         return;
-    } else {
+    }else{
         alert(json.msg);
+        location.replace(base_url + 'category');
     }
 }
+
 

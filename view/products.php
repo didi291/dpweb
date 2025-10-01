@@ -16,6 +16,6 @@
         </thead>
         <tbody id="content_product">
         </tbody>
-    </table>
+    </table>     
 </div>
 <script src="<?= BASE_URL ?>view/function/product.js"></script>

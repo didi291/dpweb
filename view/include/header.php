@@ -31,7 +31,7 @@
                             <a class="nav-link" href="<?= BASE_URL ?>products">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= BASE_URL ?>categories">Categories</a>
+                            <a class="nav-link" href="<?= BASE_URL ?>category">Category</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= BASE_URL ?>clients">Clients</a>

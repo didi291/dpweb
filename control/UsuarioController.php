@@ -142,6 +142,29 @@ if ($tipo == "eliminar") {
         }
     }
 }
+/*
+if ($tipo == "ver_proveedor") {
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $proveedor = $objPersona->verProveedor();
+    $arrProveedor = array();
+    if (count($proveedor) > 0) {
+        $arrProveedor = $proveedor;
+        $respuesta = array('status' => true, 'msg' => '', 'data' => $arrProveedor);
+    }
+    echo json_encode($respuesta);
+}*/
 
-   
-    
+$tipo = $_GET['tipo'] ?? '';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+$objUsuario = new UsuarioModel();
+
+if ($tipo == "ver_proveedores") {
+    $proveedores = $objUsuario->verProveedores();
+    $respuesta = ['status' => false, 'data' => []];
+    if (count($proveedores) > 0) $respuesta = ['status' => true, 'data' => $proveedores];
+    header('Content-Type: application/json');
+    echo json_encode($respuesta);
+    exit;
+}

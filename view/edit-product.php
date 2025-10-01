@@ -61,7 +61,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-success">Actualizar</button>
-                <a href="<?= BASE_URL ?>productos" class="btn btn-danger">Cancelar</a>
+                <a href="<?= BASE_URL ?>product" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>

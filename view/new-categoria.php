@@ -3,7 +3,7 @@
     <div class="card">
         <h5 class="card-header">Registrar Categoria
         </h5>
-        <form id="frm_categorie" action="" method="">
+        <form id="frm_category" action="" method="">
             <div class="card-body">
                 <div class="mb-3 row">
                     <label for="nombre" class="col-sm-4 col-form-label">Nombre :</label>

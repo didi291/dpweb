@@ -15,7 +15,7 @@ function validar_form(tipo) {//obtienenos los valores de los campos del formular
         return;
     }
     Swal.fire({
-        title: "¡Actualización exitosa!",
+        title: "¡Registro exitoso!",
         icon: "success",
         draggable: true
     });

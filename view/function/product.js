@@ -22,7 +22,7 @@ async function view_product() {
                             <td>${producto.categoria}</td>
                             <td>${producto.fecha_vencimiento}</td>
                             <td>
-                                <a href="`+ base_url + `edit-product/` + producto.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-products/` + producto.id + `">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
                             </td>
                 `;
@@ -31,7 +31,7 @@ async function view_product() {
             });
         }
     } catch (e) {
-        console.log('error en mostrar producto ' + e);
+        console.log('error al mostrar producto ' + e);
     }
 }
 if (document.getElementById('content_product')) {
@@ -104,10 +104,33 @@ async function cargar_categoria() {
         cache: 'no-cache',
     });
     let json = await respuesta.json();
-    let contenido = '<option>Seleccione</option>';
-    json.data.forEach(categoria => {
-        contenido += '<option value="">'+categoria.nombre+'</option>';
+    let contenido = '<option>Seleccione Categoria</option>';
+    json.data.forEach(categoria => {  
+        contenido += '<option value="'+categoria.id+'">'+categoria.nombre+'</option>';
     });
     //console.log(contenido);
     document.getElementById("id_categoria").innerHTML = contenido;
+}
+
+/*async function cargar_proveedores() {
+    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+    });
+    let json = await respuesta.json();
+    let contenido = '<option>Seleccione Proveedor</option>';
+    json.data.forEach(proveedor => {
+        contenido += '<option value="'+proveedor.id+'">'+proveedor.razon_social+'</option>';
+    });
+    //console.log(contenido);
+    document.getElementById("id_proveedor").innerHTML = contenido;
+}*/
+
+async function cargarProveedores() {
+  let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
+  let json = await respuesta.json();
+  let h = '<option value="">Seleccione Proveedor</option>';
+  json.data.forEach(proveedor => h += `<option value="${proveedor.id}">${proveedor.razon_social}</option>`);
+  document.getElementById("id_persona").innerHTML = h;
 }

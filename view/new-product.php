@@ -38,14 +38,16 @@
                     <label for="id_categoria" class="col-sm-4 col-form-label">Categoria :</label>
                     <div class="col-sm-8">
                         <select class="form-select" name="id_categoria" id="id_categoria" required>
-                            <option value="" disabled selected>Seleccione</option>
+                            <option value="" disabled selected>Seleccione Categoria</option>
                         </select>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="id_proveedor" class="col-sm-4 col-form-label">Proveedor :</label>
+                    <label for="id_persona" class="col-sm-4 col-form-label">Proveedor :</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" id="id_proveedor" name="id_proveedor" required>
+                        <select class="form-select" name="id_persona" id="id_persona" required>
+                            <option value="" disabled selected>Seleccione Proveedor</option>
+                        </select>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -62,7 +64,7 @@
                 </div>
                 <button type="submit" class="btn btn-success">Registrar</button>
                 <button type="reset" class="btn btn-info">Limpiar</button>
-                <a href="<?= BASE_URL ?>category" class="btn btn-danger">Cancelar</a>
+                <a href="<?= BASE_URL ?>categorie" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>
@@ -70,5 +72,6 @@
 <!-- FIN DE CUERPO DE PÁGINA -->
 <script src="<?php echo BASE_URL; ?>view/function/product.js"></script>
 <script>
+    cargarProveedores();
     cargar_categoria();
 </script>

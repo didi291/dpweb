@@ -1,7 +1,7 @@
 <!--INICIO DE PAGINA-->
 <div class="container-fluid">
     <div class="card">
-        <h5 class="card-header">Titulo</h5>
+        <h5 class="card-header">Registrar Usuario</h5>
         <form id="frm_user" action="" method="">
             <div class="card-body">
                 <div class="mb-3 row">
@@ -66,6 +66,7 @@
                             <option value="" disabled selected>Seleccione</option>
                             <option value="Administrador">Administrador</option>
                             <option value="Vendedor">Vendedor</option>
+                            <option value="Proveedor">Proveedor</option>
                         </select>
                     </div>
                 </div>
