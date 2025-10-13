@@ -1,8 +1,7 @@
 <!--INICIO DE PAGINA-->
 <div class="container-fluid">
     <div class="card">
-        <h5 class="card-header">Registrar Categoria
-        </h5>
+        <h5 class="card-header">Registrar Categoria</h5>
         <form id="frm_category" action="" method="">
             <div class="card-body">
                 <div class="mb-3 row">
@@ -27,4 +26,4 @@
     </div>
 </div>
 <!--FIN DE PAGINA-->
-<script src="<?php echo BASE_URL; ?>view/function/categoria.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/category.js"></script>

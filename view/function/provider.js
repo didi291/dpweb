@@ -10,34 +10,29 @@ function validar_form(tipo) {
     let direccion = document.getElementById("direccion").value;
     let rol = document.getElementById("rol").value;
     if (nro_documento == "" || razon_social == "" || telefono == "" || correo == "" || departamento == "" || provincia == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
-        Swal.fire({
-            title: "Error campos vacios!",
-            icon: "Error",
-            draggable: true
-        });
         return;
     }
     if (tipo == "nuevo") {
-        registrarUsuario();
+        registrarProveedor();
     }
     if (tipo == "actualizar") {
-        actualizarUsuario();
+        actualizarProveedor();
     }
 
 }
 
-if (document.querySelector('#frm_user')) {
+if (document.querySelector('#frm_provider')) {
     // evita que se envie el formulario
-    let frm_user = document.querySelector('#frm_user');
-    frm_user.onsubmit = function (e) {
+    let frm_provider = document.querySelector('#frm_provider');
+    frm_provider.onsubmit = function (e) {
         e.preventDefault();
         validar_form("nuevo");
     }
 }
-async function registrarUsuario() {
+async function registrarProveedor() {
     try {
         //capturar campos de formulario (HTML)
-        const datos = new FormData(frm_user);
+        const datos = new FormData(frm_provider);
         //enviar datos a controlador
         let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {
             method: 'POST',
@@ -49,54 +44,24 @@ async function registrarUsuario() {
         // validamos que json.status sea = True
         if (json.status) { //true
             alert(json.msg);
-            document.getElementById('frm_user').reset();
+            document.getElementById('frm_provider').reset();
         } else {
             alert(json.msg);
         }
     } catch (e) {
-        console.log("Error al registrar Usuario:" + e);
+        console.log("Error al registrar Proveedor:" + e);
     }
 }
 
-
-async function iniciar_sesion() {
-    let usuario = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    if (usuario == "" || password == "") {
-        alert("Error, campos vacios!");
-        return;
-    }
+async function view_provider() {
     try {
-        const datos = new FormData(frm_login);
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=iniciar_sesion', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: datos
-        });
-        // -------------------------
-        let json = await respuesta.json();
-        // validamos que json.status sea = True
-        if (json.status) { //true
-            location.replace(base_url + 'new-user');
-        } else {
-            alert(json.msg);
-        }
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-async function view_users() {
-    try {
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_usuarios', {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_provider', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache'
         });
         json = await respuesta.json();
-        contenidot = document.getElementById('content_users');
+        contenidot = document.getElementById('content_provider');
         if (json.status) {
             let cont = 1;
             json.data.forEach(usuario => {
@@ -116,7 +81,7 @@ async function view_users() {
                             <td>${usuario.rol}</td>
                             <td>${estado}</td>
                             <td>
-                                <a href="`+ base_url + `edit-user/` + usuario.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-provider/` + usuario.id + `">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + usuario.id + `);">Eliminar</button>
                             </td>
                 `;
@@ -128,11 +93,11 @@ async function view_users() {
         console.log('error en mostrar usuario ' + e);
     }
 }
-if (document.getElementById('content_users')) {
-    view_users();
+if (document.getElementById('content_provider')) {
+    view_provider();
 }
 
-async function edit_user() {
+async function edit_provider() {
     try {
         let id_persona = document.getElementById('id_persona').value;
         const datos = new FormData();
@@ -173,7 +138,7 @@ if (document.querySelector('#frm_edit_user')) {
     }
 }
 
-async function actualizarUsuario() {
+async function actualizarProveedor() {
     const datos = new FormData(frm_edit_user);
     let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=actualizar', {
         method: 'POST',
@@ -214,4 +179,3 @@ async function eliminar(id) {
         location.replace(base_url + 'users');
     }
 }
-

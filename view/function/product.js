@@ -1,4 +1,4 @@
-async function view_product() {
+async function view_products() {
     try {
         let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
             method: 'POST',
@@ -6,7 +6,7 @@ async function view_product() {
             cache: 'no-cache'
         });
         json = await respuesta.json();
-        contenidot = document.getElementById('content_product');
+        contenidot = document.getElementById('content_products');
         if (json.status) {
             let cont = 1;
             json.data.forEach(producto => {
@@ -22,7 +22,7 @@ async function view_product() {
                             <td>${producto.categoria}</td>
                             <td>${producto.fecha_vencimiento}</td>
                             <td>
-                                <a href="`+ base_url + `edit-products/` + producto.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-product/` + producto.id + `">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
                             </td>
                 `;
@@ -31,11 +31,11 @@ async function view_product() {
             });
         }
     } catch (e) {
-        console.log('error al mostrar producto ' + e);
+        console.log('error en mostrar producto ' + e);
     }
 }
-if (document.getElementById('content_product')) {
-    view_product();
+if (document.getElementById('content_products')) {
+    view_products();
 }
 
 function validar_form(tipo) {
@@ -96,41 +96,69 @@ async function registrarProducto() {
         console.log("Error al registrar Producto:" + e);
     }
 }
+async function edit_product() {
+    try {
+        let id_producto = document.getElementById('id_producto').value;
+        const datos = new FormData();
+        datos.append('id_producto', id_producto);
 
-async function cargar_categoria() {
-    let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categoria', {
+        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        json = await respuesta.json();
+        if (!json.status) {
+            alert(json.msg);
+            return;
+        }
+        document.getElementById('codigo').value = json.data.codigo;
+        document.getElementById('nombre').value = json.data.nombre;
+        document.getElementById('detalle').value = json.data.detalle;
+        document.getElementById('precio').value = json.data.precio;
+        document.getElementById('stock').value = json.data.stock;
+        document.getElementById('id_categoria').value = json.data.id_categoria;
+        document.getElementById('fecha_vencimiento').value = json.data.fecha_vencimiento;
+        document.getElementById('rol').value = json.data.rol;
+
+    } catch (error) {
+        console.log('oops, ocurrió un error ' + error);
+    }
+}
+if (document.querySelector('#frm_edit_product')) {
+    // evita que se envie el formulario
+    let frm_product = document.querySelector('#frm_edit_product');
+    frm_product.onsubmit = function (e) {
+        e.preventDefault();
+        validar_form("actualizar");
+    }
+}
+async function cargar_categorias() {
+    let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
         method: 'POST',
         mode: 'cors',
-        cache: 'no-cache',
+        cache: 'no-cache'
     });
     let json = await respuesta.json();
     let contenido = '<option>Seleccione Categoria</option>';
-    json.data.forEach(categoria => {  
-        contenido += '<option value="'+categoria.id+'">'+categoria.nombre+'</option>';
+    json.data.forEach(categoria => {
+        contenido += '<option value="' + categoria.id + '">' + categoria.nombre + '</option>';
     });
     //console.log(contenido);
     document.getElementById("id_categoria").innerHTML = contenido;
 }
-
-/*async function cargar_proveedores() {
-    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores', {
+async function cargar_proveedores() {
+    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=listar_proveedores', {
         method: 'POST',
         mode: 'cors',
-        cache: 'no-cache',
+        cache: 'no-cache'
     });
     let json = await respuesta.json();
     let contenido = '<option>Seleccione Proveedor</option>';
     json.data.forEach(proveedor => {
-        contenido += '<option value="'+proveedor.id+'">'+proveedor.razon_social+'</option>';
+        contenido += '<option value="' + proveedor.id + '">' + proveedor.razon_social + '</option>';
     });
     //console.log(contenido);
     document.getElementById("id_proveedor").innerHTML = contenido;
-}*/
-
-async function cargarProveedores() {
-  let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_proveedores');
-  let json = await respuesta.json();
-  let h = '<option value="">Seleccione Proveedor</option>';
-  json.data.forEach(proveedor => h += `<option value="${proveedor.id}">${proveedor.razon_social}</option>`);
-  document.getElementById("id_persona").innerHTML = h;
-}        
+}

@@ -72,6 +72,6 @@
 <!-- FIN DE CUERPO DE PÁGINA -->
 <script src="<?php echo BASE_URL; ?>view/function/product.js"></script>
 <script>
-    cargarProveedores();
-    cargar_categoria();
+    cargar_proveedores();
+    cargar_categorias();
 </script>

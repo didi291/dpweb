@@ -1,75 +1,13 @@
-function validar_form() {
-    let nombre = document.getElementById("nombre").value;
-    let detalle = document.getElementById("detalle").value;
 
-    if (nombre == "" || detalle == "") {
-
-        Swal.fire({
-            icon: 'warning',
-            title: 'Campos vacíos',
-            text: 'Por favor, complete todos los campos requeridos',
-            confirmButtonText: 'Entendido'
-
-
-        });
-        if (tipo == "nuevo") {
-            registrarUsuario();
-        }
-        if (tipo == "actualizar") {
-            actualizarUsuario();
-        }
-        return;
-    }
-    registrarCategoria();
-}
-if (document.querySelector('#frm_categorie')) {
-    let frm_categorie = document.querySelector('#frm_categorie');
-    frm_categorie.onsubmit = function (e) {
-        e.preventDefault();
-        validar_form();
-    }
-}
-async function registrarCategoria() {
+async function view_categorias() {
     try {
-        const datos = new FormData(frm_categorie);
-        let respuesta = await fetch(base_url + 'control/categoriaController.php?tipo=registrar', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: datos
-        });
-        let json = await respuesta.json();
-        if (json.status) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: json.msg,
-                confirmButtonText: 'OK'
-            });
-            document.getElementById('frm_categorie').reset();
-            ver_categorias(); // Recarga la lista después de registrar
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: json.msg,
-                confirmButtonText: 'OK'
-            });
-        }
-    } catch (error) {
-        console.log("error al registrar categoría: " + error);
-    }
-}
-
-async function ver_categoria() {
-    try {
-        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categoria', {
+        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache'
         });
         json = await respuesta.json();
-        contenidot = document.getElementById('content_category');
+        contenidot = document.getElementById('content_categorias');
         if (json.status) {
             let cont = 1;
             json.data.forEach(categoria => {
@@ -94,15 +32,65 @@ async function ver_categoria() {
         console.log('error en mostrar categoria ' + error);
     }
 }
-if (document.getElementById('content_category')) {
-    ver_categoria();
+if (document.getElementById('content_categorias')) {
+    view_categorias();
 }
 
 
-// Llamar a la función al cargar la página
-document.addEventListener('DOMContentLoaded', function () {
-    ver_categorias();
-});
+
+function validar_form(tipo) {
+    let nombre = document.getElementById("nombre").value;
+    let detalle = document.getElementById("detalle").value;
+    if (nombre == "" || detalle == "") {
+        Swal.fire({
+            title: "Error campos vacios!",
+            icon: "Error",
+            draggable: true
+        });
+        return;
+    }
+    if (tipo == "nuevo") {
+        registrarCategoria();
+    }
+    if (tipo == "actualizar") {
+        actualizarCategoria();
+    }
+
+}
+
+if (document.querySelector('#frm_category')) {
+    // evita que se envie el formulario
+    let frm_category = document.querySelector('#frm_category');
+    frm_category.onsubmit = function (e) {
+        e.preventDefault();
+        validar_form("nuevo");
+    }
+}
+async function registrarCategoria() {
+    try {
+        //capturar campos de formulario (HTML)
+        const datos = new FormData(frm_category);
+        //enviar datos a controlador
+        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=registrar', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        let json = await respuesta.json();
+        // validamos que json.status sea = True
+        if (json.status) { //true
+            alert(json.msg);
+            document.getElementById('frm_category').reset();
+        } else {
+            alert(json.msg);
+        }
+    } catch (e) {
+        console.log("Error al registrar Categoria:" + e);
+    }
+}
+
+
 async function edit_categoria() {
     try {
         let id_categoria = document.getElementById('id_categoria').value;
@@ -136,6 +124,7 @@ if (document.querySelector('#frm_edit_category')) {
     }
 }
 
+
 async function actualizarCategoria() {
     const datos = new FormData(frm_edit_category);
     let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=actualizar', {
@@ -154,32 +143,13 @@ async function actualizarCategoria() {
     }
 }
 
-// Actualiza la función validar_form para incluir la actualización
-function validar_form(tipo = "nuevo") {
-    let nombre = document.getElementById("nombre").value;
-    let detalle = document.getElementById("detalle").value;
 
-    if (nombre == "" || detalle == "") {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Campos vacíos',
-            text: 'Por favor, complete todos los campos requeridos',
-            confirmButtonText: 'Entendido'
-        });
-        return;
-    }
-    if (tipo == "actualizar") {
-        actualizarCategoria();
-    } else {
-        registrarCategoria(); // Para el caso de nuevo registro, si aplica
-    }
-}
 async function fn_eliminar(id) {
     if (window.confirm("Confirmar eliminar?")) {
         eliminar(id);
     }
 }
-async function eliminarCategoria(id) {
+async function eliminar(id) {
     let datos = new FormData();
     datos.append('id_categoria', id);
     let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=eliminar', {
@@ -198,5 +168,3 @@ async function eliminarCategoria(id) {
         location.replace(base_url + 'category');
     }
 }
-
-

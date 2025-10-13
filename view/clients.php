@@ -1,7 +1,7 @@
 <div class="container">
-    <h4 class="mt-3 mb-3">Lista de Usuarios</h4>
-    <a href="<?php echo BASE_URL; ?>new-user" class="btn btn-success">Nuevo Usuario</a>
-    <br><br>
+    <h4 class="mt-3 mb-3">Lista de Clientes</h4>
+    <a href="<?php echo BASE_URL; ?>new-client" class="btn btn-success">Nuevo Cliente</a>
+    <br><br>  
     <table class="table table-bordered table-striped border-dark">
         <thead>
             <tr>
@@ -14,8 +14,9 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="content_users">
+        <tbody id="content_clients">
+            <!-- Content will be loaded here dynamically -->
         </tbody>
     </table>
 </div>
-<script src="<?= BASE_URL ?>view/function/user.js"></script>
+<script src="<?= BASE_URL ?>view/function/clients.js"></script>

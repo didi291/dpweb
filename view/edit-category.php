@@ -31,7 +31,7 @@
     </div>
 </div>
 <!--FIN DE PAGINA-->
-<script src="<?php echo BASE_URL; ?>view/function/categoria.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/category.js"></script>
 <script>
     edit_category();
 </script>
