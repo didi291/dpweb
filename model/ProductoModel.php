@@ -57,13 +57,13 @@ class ProductoModel
         return $sql->fetch_object();
     }
 
-    public function actualizar($id_cat, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor) {
-        $consulta = "UPDATE producto SET nombre='$nombre', detalle='$detalle', precio=$precio, stock=$stock, id_categoria=$id_categoria, fecha_vencimiento='$fecha_vencimiento', id_proveedor=$id_proveedor WHERE id='$id_cat'";
+    public function actualizar($codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor) {
+        $consulta = "UPDATE producto SET nombre='$nombre', detalle='$detalle', precio=$precio, stock=$stock, id_categoria=$id_categoria, fecha_vencimiento='$fecha_vencimiento', id_proveedor=$id_proveedor WHERE codigo='$codigo'";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
      public function eliminar($id){
-        $consulta = "DELETE FROM producto WHERE id='$id'";
+        $consulta = "DELETE * FROM producto WHERE id='$id'";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }

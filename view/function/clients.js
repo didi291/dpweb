@@ -86,7 +86,7 @@ async function view_clients() {
                             <td>${usuario.rol}</td>
                             <td>${estado}</td>
                             <td>
-                                <a href="`+ base_url + `edit-client/` + usuario.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-client/` + usuario.id + `" class="btn btn-primary">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + usuario.id + `);">Eliminar</button>
                             </td>
                 `;
@@ -158,10 +158,11 @@ async function actualizarCliente() {
         return;
     }else{
         alert(json.msg);
+        location.replace(base_url + 'users');
     }
 }
 async function fn_eliminar(id) {
-    if (window.confirm("Confirmar eliminar?")) {
+    if (window.confirm("¿Desea eliminar?")) {
         eliminar(id);
     }
 }

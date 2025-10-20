@@ -6,8 +6,8 @@ function validar_form(tipo) {
     let stock = document.getElementById("stock").value;
     let id_categoria = document.getElementById("id_categoria").value;
     let fecha_vencimiento = document.getElementById("fecha_vencimiento").value;
-    let imagen = document.getElementById("imagen").value;
-    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "" || imagen == "") {
+    //let imagen = document.getElementById("imagen").value;
+    if (codigo == "" || nombre == "" || detalle == "" || precio == "" || stock == "" || id_categoria == "" || fecha_vencimiento == "") {
         Swal.fire({
             title: "Error campos vacios!",
             icon: "Error",
@@ -79,9 +79,10 @@ async function view_products() {
                             <td>${producto.precio}</td>
                             <td>${producto.stock}</td>
                             <td>${producto.categoria}</td>
+                            <td>${producto.proveedor}</td>
                             <td>${producto.fecha_vencimiento}</td>
                             <td>
-                                <a href="`+ base_url + `edit-product/` + producto.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-product/` + producto.id + `" class="btn btn-primary">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
                             </td>
                 `;
@@ -121,7 +122,8 @@ async function edit_product() {
         document.getElementById('stock').value = json.data.stock;
         document.getElementById('id_categoria').value = json.data.id_categoria;
         document.getElementById('fecha_vencimiento').value = json.data.fecha_vencimiento;
-        document.getElementById('rol').value = json.data.rol;
+        //document.getElementById('imagen').value = json.data.imagen;
+        document.getElementById('id_proveedor').value = json.data.id_proveedor;
 
     } catch (error) {
         console.log('oops, ocurrió un error ' + error);
@@ -150,6 +152,26 @@ async function fn_eliminar(id) {
         eliminar(id);
     }
 }
+async function eliminar(id_producto) {
+    let datos = new FormData();
+    datos.append('id_producto', id_producto);
+    let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=eliminar', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        body: datos
+    });
+    json = await respuesta.json();
+    if (!json.status) {
+        alert("Oooooops, ocurrio un error al eliminar persona, intentelo mas tarde");
+        console.log(json.msg);
+        return;
+    }else{
+        alert(json.msg);
+        location.replace(base_url + 'products');
+    }
+}
+
 if (document.querySelector('#frm_edit_product')) {
     // evita que se envie el formulario
     let frm_product = document.querySelector('#frm_edit_product');

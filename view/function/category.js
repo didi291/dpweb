@@ -71,7 +71,7 @@ async function view_categorias() {
                             <td>${categoria.nombre}</td>
                             <td>${categoria.detalle}</td>
                             <td>
-                                <a href="`+ base_url + `edit-category/` + categoria.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-category/` + categoria.id + `" class="btn btn-primary">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + categoria.id + `);">Eliminar</button>
                             </td>
                 `;

@@ -81,7 +81,7 @@ async function view_provider() {
                             <td>${usuario.rol}</td>
                             <td>${estado}</td>
                             <td>
-                                <a href="`+ base_url + `edit-provider/` + usuario.id + `">Editar</a>
+                                <a href="`+ base_url + `edit-provider/` + usuario.id + `" class="btn btn-primary">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + usuario.id + `);">Eliminar</button>
                             </td>
                 `;
@@ -153,10 +153,11 @@ async function actualizarProveedor() {
         return;
     }else{
         alert(json.msg);
+        location.replace(base_url + 'provider');
     }
 }
 async function fn_eliminar(id) {
-    if (window.confirm("Confirmar eliminar?")) {
+    if (window.confirm("¿Estás seguro de querer eliminar?")) {
         eliminar(id);
     }
 }
@@ -176,6 +177,6 @@ async function eliminar(id) {
         return;
     }else{
         alert(json.msg);
-        location.replace(base_url + 'users');
+        location.replace(base_url + 'provider');
     }
 }

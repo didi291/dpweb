@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success">Actualizar</button>
-                <a href="<?= BASE_URL ?>users" class="btn btn-danger">Cancelar</a>
+                <a href="<?= BASE_URL ?>clients" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>

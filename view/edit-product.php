@@ -1,7 +1,7 @@
 <!--INICIO DE PAGINA-->
 <div class="container-fluid">
     <div class="card">
-        <h5 class="card-header">Editar Datos de Producto</h5>
+        <h5 class="card-header">Editar Productos</h5>
         <?php
         if (isset($_GET["views"])) {
             $ruta = explode("/", $_GET["views"]);
@@ -9,7 +9,7 @@
         }
         ?>
         <form id="frm_edit_product" action="" method="">
-            <input type="hidden" id="id" name="id" value="<?= $ruta[1]; ?>">
+            <input type="hidden" id="id_producto" name="id_producto" value="<?= $ruta[1]; ?>">
             <div class="card-body">
                 <div class="mb-3 row">
                     <label for="codigo" class="col-sm-4 col-form-label">Código :</label>
@@ -60,8 +60,22 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label for="id_proveedor" class="col-sm-4 col-form-label">ID Proveedor :</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="id_proveedor" name="id_proveedor" required>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="imagen" class="col-sm-4 col-form-label">Imagen :</label>
+                    <div class="col-sm-8">
+                        <input type="file" class="form-control" id="imagen" name="imagen" accept=".jpg, .jpeg, .png">
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-success">Actualizar</button>
-                <a href="<?= BASE_URL ?>product" class="btn btn-danger">Cancelar</a>
+                <a href="<?= BASE_URL ?>products" class="btn btn-danger">Cancelar</a>
             </div>
         </form>
     </div>
