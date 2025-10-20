@@ -43,9 +43,9 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="id_persona" class="col-sm-4 col-form-label">Proveedor :</label>
+                    <label for="id_proveedor" class="col-sm-4 col-form-label">Proveedor :</label>
                     <div class="col-sm-8">
-                        <select class="form-select" name="id_persona" id="id_persona" required>
+                        <select class="form-select" name="id_proveedor" id="id_proveedor" required>
                             <option value="" disabled selected>Seleccione Proveedor</option>
                         </select>
                     </div>

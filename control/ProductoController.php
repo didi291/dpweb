@@ -77,3 +77,47 @@ if ($tipo === "registrar") {
     }
     exit;
 }
+
+if ($tipo == "actualizar") {
+    //print_r($_POST);
+    $codigo = $_POST['codigo'];
+    $nombre = $_POST['nombre'];
+    $detalle = $_POST['detalle'];
+    $precio = $_POST['precio'];
+    $stock = $_POST['stock'];
+    $id_categoria = $_POST['id_categoria'];
+    $fecha_vencimiento = $_POST['fecha_vencimiento'];
+    $id_proveedor = $_POST['id_proveedor'];
+
+    if ($codigo == "" || $nombre == "" || $detalle == "" || $precio == "" || $stock == "" || $id_categoria == "" || $fecha_vencimiento == "" || $id_proveedor == "") {
+        echo json_encode(['status' => false, 'msg' => 'Error, campos vacíos']);
+        exit;
+    }
+    $existeID = $objProducto->ver($id);
+    if (!$existeID) {
+        echo json_encode(['status' => false, 'msg' => 'Error, producto no existe en BD']);
+        exit;
+    }
+    $actualizar = $objProducto->actualizar($id, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor);
+    if ($actualizar) {
+        echo json_encode(['status' => true, 'msg' => 'Actualizado correctamente']);
+    } else {
+        echo json_encode(['status' => false, 'msg' => 'Error, no se pudo actualizar']);
+    }
+    exit;
+}
+if ($tipo == "eliminar") {
+    $id = $_POST['id'];
+    $existeID = $objProducto->ver($id);  
+    if (!$existeID) {
+        echo json_encode(['status' => false, 'msg' => 'Error, producto no existe en BD']);
+        exit;
+    }
+    $eliminar = $objProducto->eliminar($id);
+    if ($eliminar) {
+        echo json_encode(['status' => true, 'msg' => 'Eliminado correctamente']);
+    } else {
+        echo json_encode(['status' => false, 'msg' => 'Error, no se pudo eliminar']);
+    }
+    exit;
+}

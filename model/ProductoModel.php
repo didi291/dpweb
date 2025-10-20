@@ -57,8 +57,8 @@ class ProductoModel
         return $sql->fetch_object();
     }
 
-    public function actualizar($id_cat, $nombre, $detalle) {
-        $consulta = "UPDATE producto SET nombre='$nombre', detalle='$detalle' WHERE id='$id_cat'";
+    public function actualizar($id_cat, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor) {
+        $consulta = "UPDATE producto SET nombre='$nombre', detalle='$detalle', precio=$precio, stock=$stock, id_categoria=$id_categoria, fecha_vencimiento='$fecha_vencimiento', id_proveedor=$id_proveedor WHERE id='$id_cat'";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }

@@ -1,8 +1,8 @@
 <div class="container">
     <h4 class="mt-3 mb-3">Lista de Categorias</h4>
-    <a href="<?= BASE_URL ?>new-category" class="btn btn-secondary">Nueva Categoria</a>
+    <a href="<?= BASE_URL ?>new-category" class="btn btn-success">Nueva Categoria</a>
     <br><br>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped border-dark">
         <thead>
             <tr>
                 <th>Nro</th>

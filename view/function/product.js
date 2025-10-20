@@ -1,43 +1,3 @@
-async function view_products() {
-    try {
-        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache'
-        });
-        json = await respuesta.json();
-        contenidot = document.getElementById('content_products');
-        if (json.status) {
-            let cont = 1;
-            json.data.forEach(producto => {
-                let nueva_fila = document.createElement("tr");
-                nueva_fila.id = "fila" + producto.id;
-                nueva_fila.className = "filas_tabla";
-                nueva_fila.innerHTML = `
-                            <td>${cont}</td>
-                            <td>${producto.codigo}</td>
-                            <td>${producto.nombre}</td>
-                            <td>${producto.precio}</td>
-                            <td>${producto.stock}</td>
-                            <td>${producto.categoria}</td>
-                            <td>${producto.fecha_vencimiento}</td>
-                            <td>
-                                <a href="`+ base_url + `edit-product/` + producto.id + `">Editar</a>
-                                <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
-                            </td>
-                `;
-                cont++;
-                contenidot.appendChild(nueva_fila);
-            });
-        }
-    } catch (e) {
-        console.log('error en mostrar producto ' + e);
-    }
-}
-if (document.getElementById('content_products')) {
-    view_products();
-}
-
 function validar_form(tipo) {
     let codigo = document.getElementById("codigo").value;
     let nombre = document.getElementById("nombre").value;
@@ -96,6 +56,47 @@ async function registrarProducto() {
         console.log("Error al registrar Producto:" + e);
     }
 }
+async function view_products() {
+    try {
+        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+        json = await respuesta.json();
+        contenidot = document.getElementById('content_products');
+        if (json.status) {
+            let cont = 1;
+            json.data.forEach(producto => {
+                let nueva_fila = document.createElement("tr");
+                nueva_fila.id = "fila" + producto.id;
+                nueva_fila.className = "filas_tabla";
+                nueva_fila.innerHTML = `
+                            <td>${cont}</td>
+                            <td>${producto.codigo}</td>
+                            <td>${producto.nombre}</td>
+                            <td>${producto.detalle}</td>
+                            <td>${producto.precio}</td>
+                            <td>${producto.stock}</td>
+                            <td>${producto.categoria}</td>
+                            <td>${producto.fecha_vencimiento}</td>
+                            <td>
+                                <a href="`+ base_url + `edit-product/` + producto.id + `">Editar</a>
+                                <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
+                            </td>
+                `;
+                cont++;
+                contenidot.appendChild(nueva_fila);
+            });
+        }
+    } catch (e) {
+        console.log('error en mostrar producto ' + e);
+    }
+}
+if (document.getElementById('content_products')) {
+    view_products();
+}
+
 async function edit_product() {
     try {
         let id_producto = document.getElementById('id_producto').value;
@@ -124,6 +125,29 @@ async function edit_product() {
 
     } catch (error) {
         console.log('oops, ocurrió un error ' + error);
+    }
+}
+
+async function actualizarProducto() {
+    const datos = new FormData(frm_edit_product);
+    let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=actualizar', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        body: datos
+    });
+    json = await respuesta.json();
+    if (!json.status) {
+        alert("Oooooops, ocurrio un error al actualizar, intentelo nuevamente");
+        console.log(json.msg);
+        return;
+    }else{
+        alert(json.msg);
+    }
+}
+async function fn_eliminar(id) {
+    if (window.confirm("¿Seguro que quiere eliminar?")) {
+        eliminar(id);
     }
 }
 if (document.querySelector('#frm_edit_product')) {

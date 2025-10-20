@@ -191,7 +191,7 @@ async function actualizarUsuario() {
     }
 }
 async function fn_eliminar(id) {
-    if (window.confirm("Confirmar eliminar?")) {
+    if (window.confirm("¿Esta seguro de eliminar?")) {
         eliminar(id);
     }
 }

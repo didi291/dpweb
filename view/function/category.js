@@ -1,43 +1,3 @@
-
-async function view_categorias() {
-    try {
-        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache'
-        });
-        json = await respuesta.json();
-        contenidot = document.getElementById('content_categorias');
-        if (json.status) {
-            let cont = 1;
-            json.data.forEach(categoria => {
-                
-                let nueva_fila = document.createElement("tr");
-                nueva_fila.id = "fila" + categoria.id;
-                nueva_fila.className = "filas_tabla";
-                nueva_fila.innerHTML = `
-                            <td>${cont}</td>
-                            <td>${categoria.nombre}</td>
-                            <td>${categoria.detalle}</td>
-                            <td>
-                                <a href="`+ base_url + `edit-category/` + categoria.id + `">Editar</a>
-                                <button class="btn btn-danger" onclick="fn_eliminar(` + categoria.id + `);">Eliminar</button>
-                            </td>
-                `;
-                cont++;
-                contenidot.appendChild(nueva_fila);
-            });
-        }
-    } catch (error) {
-        console.log('error en mostrar categoria ' + error);
-    }
-}
-if (document.getElementById('content_categorias')) {
-    view_categorias();
-}
-
-
-
 function validar_form(tipo) {
     let nombre = document.getElementById("nombre").value;
     let detalle = document.getElementById("detalle").value;
@@ -90,6 +50,42 @@ async function registrarCategoria() {
     }
 }
 
+async function view_categorias() {
+    try {
+        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+        json = await respuesta.json();
+        contenidot = document.getElementById('content_categorias');
+        if (json.status) {
+            let cont = 1;
+            json.data.forEach(categoria => {
+                
+                let nueva_fila = document.createElement("tr");
+                nueva_fila.id = "fila" + categoria.id;
+                nueva_fila.className = "filas_tabla";
+                nueva_fila.innerHTML = `
+                            <td>${cont}</td>
+                            <td>${categoria.nombre}</td>
+                            <td>${categoria.detalle}</td>
+                            <td>
+                                <a href="`+ base_url + `edit-category/` + categoria.id + `">Editar</a>
+                                <button class="btn btn-danger" onclick="fn_eliminar(` + categoria.id + `);">Eliminar</button>
+                            </td>
+                `;
+                cont++;
+                contenidot.appendChild(nueva_fila);
+            });
+        }
+    } catch (error) {
+        console.log('error en mostrar categoria ' + error);
+    }
+}
+if (document.getElementById('content_categorias')) {
+    view_categorias();
+}
 
 async function edit_categoria() {
     try {
@@ -145,7 +141,7 @@ async function actualizarCategoria() {
 
 
 async function fn_eliminar(id) {
-    if (window.confirm("Confirmar eliminar?")) {
+    if (window.confirm("¿Esta seguro de eliminar?")) {
         eliminar(id);
     }
 }
