@@ -72,7 +72,7 @@ if ($tipo === "registrar") {
     if ($id > 0) {
         echo json_encode(['status' => true, 'msg' => 'Registrado correctamente', 'id' => $id, 'img' => $rutaRelativa]);
     } else {
-        @unlink($rutaFisica); // revertir archivo si falló BD
+        @unlink($rutaFisica); // revertir archivo si falló BD, tambien para eliminar el archivo
         echo json_encode(['status' => false, 'msg' => 'Error, falló en registro']);
     }
     exit;
@@ -118,7 +118,8 @@ if ($tipo === "actualizar") {
                 $imagen  = $producto->imagen;
             } else {
                 //echo "si se envio la imagen";
-                //´rimero subir imagen en la carpeta uploads, luego obtener la ruta del archivo y la misma guardarla en la BD, en casa de que se envie guardar como la variable imagen
+                //primero subir imagen en la carpeta uploads, luego obtener la ruta del archivo y la misma guardarla en la BD, en casa de que se envie guardar como la variable imagen
+            
                 $file = $_FILES['imagen'];
                 $ext  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                 $extPermitidas = ['jpg', 'jpeg', 'png'];
