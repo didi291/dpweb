@@ -37,16 +37,16 @@
                 <div class="mb-3 row">
                     <label for="id_categoria" class="col-sm-4 col-form-label">Categoria :</label>
                     <div class="col-sm-8">
-                        <select class="form-select" name="id_categoria" id="id_categoria" required>
-                            <option value="" disabled selected>Seleccione Categoria</option>
+                        <select class="form-control" name="id_categoria" id="id_categoria" required>
+                            <option value="">Seleccione Categoria</option>
                         </select>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="id_proveedor" class="col-sm-4 col-form-label">Proveedor :</label>
                     <div class="col-sm-8">
-                        <select class="form-select" name="id_proveedor" id="id_proveedor" required>
-                            <option value="" disabled selected>Seleccione Proveedor</option>
+                        <select class="form-control" name="id_proveedor" id="id_proveedor" required>
+                            <option value="">Seleccione Proveedor</option>
                         </select>
                     </div>
                 </div>
@@ -72,6 +72,6 @@
 <!-- FIN DE CUERPO DE PÁGINA -->
 <script src="<?php echo BASE_URL; ?>view/function/product.js"></script>
 <script>
-    cargar_proveedores();
     cargar_categorias();
+    cargar_proveedores();
 </script>

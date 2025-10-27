@@ -1,4 +1,5 @@
 <?php
+
 require_once("../library/conexion.php");
 class ProductoModel
 {
@@ -11,27 +12,33 @@ class ProductoModel
     
     public function verProductos()
     {
-        $arr_categorias = array();
+        $arr = array();
         $consulta = "SELECT * FROM producto";
         $sql = $this->conexion->query($consulta);
-        while ($objeto = $sql->fetch_object()) {
-            array_push($arr_categorias, $objeto);
+        if ($sql) {
+            while ($objeto = $sql->fetch_object()) {
+                array_push($arr, $objeto);
+            }
         }
-        return $arr_categorias;
+        return $arr;
     }
+
     public function existeCodigo($codigo)
     {
         $codigo = $this->conexion->real_escape_string($codigo);
         $consulta = "SELECT id FROM producto WHERE codigo='$codigo' LIMIT 1";
         $sql = $this->conexion->query($consulta);
-        return $sql->num_rows;
+        return $sql ? $sql->num_rows : 0;
     }
+
     public function existeCategoria($nombre)
     {
-        $consulta = "SELECT * FROM producto WHERE nombre='$nombre'";
+        $nombre = $this->conexion->real_escape_string($nombre);
+        $consulta = "SELECT id FROM producto WHERE nombre='$nombre' LIMIT 1";
         $sql = $this->conexion->query($consulta);
-        return $sql->num_rows;
+        return $sql ? $sql->num_rows : 0;
     }
+
     public function registrar($codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $imagen, $id_proveedor)
     {
         $codigo            = $this->conexion->real_escape_string($codigo);
@@ -43,27 +50,55 @@ class ProductoModel
         $fecha_vencimiento = $this->conexion->real_escape_string($fecha_vencimiento);
         $id_proveedor      = intval($id_proveedor);
         $imagen            = $this->conexion->real_escape_string($imagen);
-        $consulta = "INSERT INTO producto (codigo, nombre, detalle, precio, stock, id_categoria, fecha_vencimiento, imagen, id_proveedor) VALUES ('$codigo', '$nombre', '$detalle', $precio, $stock, $id_categoria, '$fecha_vencimiento', '$imagen', '$id_proveedor')";
+
+        $consulta = "INSERT INTO producto (codigo, nombre, detalle, precio, stock, id_categoria, fecha_vencimiento, imagen, id_proveedor)
+                     VALUES ('$codigo', '$nombre', '$detalle', $precio, $stock, $id_categoria, '$fecha_vencimiento', '$imagen', $id_proveedor)";
         $sql = $this->conexion->query($consulta);
         if ($sql) {
             return $this->conexion->insert_id;
         }
         return 0;
     }
+
     public function ver($id)
     {
-        $consulta = "SELECT * FROM producto WHERE id='$id'";
+        $id = intval($id);
+        $consulta = "SELECT * FROM producto WHERE id=$id";
         $sql = $this->conexion->query($consulta);
-        return $sql->fetch_object();
+        return $sql ? $sql->fetch_object() : null;
     }
 
-    public function actualizar($codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor) {
-        $consulta = "UPDATE producto SET nombre='$nombre', detalle='$detalle', precio=$precio, stock=$stock, id_categoria=$id_categoria, fecha_vencimiento='$fecha_vencimiento', id_proveedor=$id_proveedor WHERE codigo='$codigo'";
+    // CORRECCIÓN: firma para actualizar por id e incluir imagen
+    public function actualizar($id_producto, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $imagen, $id_proveedor) {
+        $id_producto       = intval($id_producto);
+        $codigo            = $this->conexion->real_escape_string($codigo);
+        $nombre            = $this->conexion->real_escape_string($nombre);
+        $detalle           = $this->conexion->real_escape_string($detalle);
+        $precio            = floatval($precio);
+        $stock             = intval($stock);
+        $id_categoria      = intval($id_categoria);
+        $fecha_vencimiento = $this->conexion->real_escape_string($fecha_vencimiento);
+        $imagen            = $this->conexion->real_escape_string($imagen);
+        $id_proveedor      = intval($id_proveedor);
+
+        $consulta = "UPDATE producto SET
+                        codigo='$codigo',
+                        nombre='$nombre',
+                        detalle='$detalle',
+                        precio=$precio,
+                        stock=$stock,
+                        id_categoria=$id_categoria,
+                        fecha_vencimiento='$fecha_vencimiento',
+                        imagen='$imagen',
+                        id_proveedor=$id_proveedor
+                     WHERE id=$id_producto";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
-     public function eliminar($id){
-        $consulta = "DELETE * FROM producto WHERE id='$id'";
+
+    public function eliminar($id){
+        $id = intval($id);
+        $consulta = "DELETE FROM producto WHERE id=$id";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
