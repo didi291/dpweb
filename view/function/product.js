@@ -143,7 +143,7 @@ async function actualizarProducto() {
         alert("Oooooops, ocurrio un error al actualizar, intentelo nuevamente");
         console.log(json.msg);
         return;
-    }else{
+    } else {
         alert(json.msg);
     }
 }
@@ -166,7 +166,7 @@ async function eliminar(id_producto) {
         alert("Oooooops, ocurrio un error al eliminar persona, intentelo mas tarde");
         console.log(json.msg);
         return;
-    }else{
+    } else {
         alert(json.msg);
         location.replace(base_url + 'products');
     }
@@ -226,7 +226,61 @@ async function view_products_cards() {
             contenedor.className = 'row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3';
 
             json.data.forEach(producto => {
-                // 🔹 Ruta correcta a tu carpeta de imágenes
+                let rutaImagen;
+                if (producto.imagen && producto.imagen.startsWith('data:image')) {
+                    rutaImagen = producto.imagen;
+                } else if (producto.imagen && producto.imagen.trim() !== "") {
+                    rutaImagen = base_url + producto.imagen;
+                } else {
+                    rutaImagen = base_url + 'assets/img/no-image.png';
+                }
+
+                let card = document.createElement('div');
+                card.className = 'col';
+                card.innerHTML = `
+                    <div class="card h-100 shadow-sm">
+                        <img src="${rutaImagen}" class="card-img-top" alt="${producto.nombre}" style="height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">${producto.nombre}</h5>
+                            <p class="card-text">${producto.detalle}</p>
+                            <p class="fw-bold text-success">S/ ${parseFloat(producto.precio).toFixed(2)}</p>
+                            <p><span class="badge bg-secondary">Stock: ${producto.stock}</span></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-center gap-2">
+                            <button class="btn btn-primary btn-sm">Ver detalles</button>
+                            <button class="btn btn-success btn-sm">Añadir al carrito</button>
+                        </div>
+                    </div>
+                `;
+                contenedor.appendChild(card);
+            });
+
+            contenido.appendChild(contenedor);
+        } else {
+            contenido.innerHTML = '<p class="text-center text-muted">No hay productos disponibles.</p>';
+        }
+    } catch (e) {
+        console.log('Error al mostrar productos: ' + e);
+    }
+}
+
+/*async function view_products_cards() {
+    try {
+        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
+        });
+        let json = await respuesta.json();
+        let contenido = document.getElementById('content_products');
+
+        contenido.innerHTML = '';
+
+        if (json.status) {
+            let contenedor = document.createElement('div');
+            contenedor.className = 'row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3';
+
+            json.data.forEach(producto => {
                 let rutaImagen = producto.imagen && producto.imagen !== "" 
                     ? base_url + "uploads/productos/" + producto.imagen 
                     : base_url + "assets/img/no-image.png";
@@ -246,9 +300,8 @@ async function view_products_cards() {
                             <p class="small">Vence: ${producto.fecha_vencimiento}</p>
                         </div>
                         <div class="card-footer d-flex justify-content-center gap-2">
-                            <!-- 🔹 Botones sin funcionalidad -->
-                            <button class="btn btn-primary btn-sm">Ver detalles</button>
-                            <button class="btn btn-success btn-sm">Añadir al carrito</button>
+                            <a href="${base_url}edit-product/${producto.id}" class="btn btn-primary btn-sm">Editar</a>
+                            <button class="btn btn-danger btn-sm" onclick="fn_eliminar(${producto.id});">Eliminar</button>
                         </div>
                     </div>
                 `;
@@ -262,4 +315,5 @@ async function view_products_cards() {
     } catch (e) {
         console.log('Error al mostrar productos en tarjetas: ' + e);
     }
-}
+}*/
+
