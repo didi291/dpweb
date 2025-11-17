@@ -81,6 +81,7 @@ async function view_products() {
                             <td>${producto.categoria}</td>
                             <td>${producto.proveedor}</td>
                             <td>${producto.fecha_vencimiento}</td>
+                            <td><svg id="barcode${producto.id}"></svg></td>
                             <td>
                                 <a href="`+ base_url + `edit-product/` + producto.id + `" class="btn btn-primary">Editar</a>
                                 <button class="btn btn-danger" onclick="fn_eliminar(` + producto.id + `);">Eliminar</button>
@@ -88,14 +89,18 @@ async function view_products() {
                 `;
                 cont++;
                 contenidot.appendChild(nueva_fila);
+                JsBarcode("#barcode" + producto.id, "" + producto.codigo, { width: 2, height: 40 });
             });
+            /*json.data.forEach(producto => {
+                JsBarcode("#barcode" + producto.id, producto.codigo, {format: "CODE128", width: 2, height: 40});
+            });*/
         }
     } catch (e) {
         console.log('error en mostrar producto ' + e);
     }
 }
 if (document.getElementById('content_products')) {
-    view_products_cards();
+    view_products();
 }
 
 async function edit_product() {
@@ -209,111 +214,53 @@ async function cargar_proveedores() {
     document.getElementById("id_proveedor").innerHTML = contenido;
 }
 
-async function view_products_cards() {
+async function listar_productos() {
     try {
-        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
+        let dato = document.getElementById('busqueda_venta').value;
+        const datos = new FormData();
+        datos.append('dato', dato);
+        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=buscar_producto_venta', {
             method: 'POST',
             mode: 'cors',
-            cache: 'no-cache'
+            cache: 'no-cache',
+            body: datos
         });
-        let json = await respuesta.json();
-        let contenido = document.getElementById('content_products');
-
-        contenido.innerHTML = '';
-
+        json = await respuesta.json();
+        contenidot = document.getElementById('productos_venta');
         if (json.status) {
-            let contenedor = document.createElement('div');
-            contenedor.className = 'row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3';
-
+            let cont = 1;
+            contenidot.innerHTML = ``;
             json.data.forEach(producto => {
-                let rutaImagen;
-                if (producto.imagen && producto.imagen.startsWith('data:image')) {
-                    rutaImagen = producto.imagen;
-                } else if (producto.imagen && producto.imagen.trim() !== "") {
-                    rutaImagen = base_url + producto.imagen;
-                } else {
-                    rutaImagen = base_url + 'assets/img/no-image.png';
-                }
-
-                let card = document.createElement('div');
-                card.className = 'col';
-                card.innerHTML = `
-                    <div class="card h-100 shadow-sm">
-                        <img src="${rutaImagen}" class="card-img-top" alt="${producto.nombre}" style="height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">${producto.nombre}</h5>
-                            <p class="card-text">${producto.detalle}</p>
-                            <p class="fw-bold text-success">S/ ${parseFloat(producto.precio).toFixed(2)}</p>
-                            <p><span class="badge bg-secondary">Stock: ${producto.stock}</span></p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center gap-2">
-                            <button class="btn btn-primary btn-sm">Ver detalles</button>
-                            <button class="btn btn-success btn-sm">Añadir al carrito</button>
-                        </div>
+                let producto_list = `
+                <div class="card m-2" style="width:100%; max-width:280px;">
+                    <div class="text-center bg-light p-3">
+                        <img src="${base_url + producto.imagen}" 
+                             class="img-fluid" 
+                             style="max-height:140px; width:auto; object-fit:contain;" 
+                             alt="${producto.nombre}">
                     </div>
-                `;
-                contenedor.appendChild(card);
-            });
+                    <div class="card-body text-center py-3">
+                        <h6 class="mb-2 fw-bold" style="font-size:0.95rem;">${producto.nombre}</h6>
+                        <p class="text-success fw-bold mb-1">S/ ${producto.precio}</p>
+                        <small class="text-muted d-block mb-2">Stock: ${producto.stock}</small>
+                        <button onclick="agregar_producto_venta(${producto.id})" 
+                                class="btn btn-primary btn-sm w-100 mb-1">Agregar</button>
+                        <button onclick="ver_detalle_producto(${producto.id})" 
+                                class="btn btn-secondary btn-sm w-100">Ver detalle</button>
+                    </div>
+                </div>`;
 
-            contenido.appendChild(contenedor);
-        } else {
-            contenido.innerHTML = '<p class="text-center text-muted">No hay productos disponibles.</p>';
+                let nueva_fila = document.createElement("div");
+                nueva_fila.className = "col-md-3 col-sm-6 col-12 text-center";
+                nueva_fila.innerHTML = producto_list;
+                cont++;
+                contenidot.appendChild(nueva_fila);
+            });
         }
     } catch (e) {
-        console.log('Error al mostrar productos: ' + e);
+        console.log('error en mostrar producto ' + e);
     }
 }
-
-/*async function view_products_cards() {
-    try {
-        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver_productos', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache'
-        });
-        let json = await respuesta.json();
-        let contenido = document.getElementById('content_products');
-
-        contenido.innerHTML = '';
-
-        if (json.status) {
-            let contenedor = document.createElement('div');
-            contenedor.className = 'row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3';
-
-            json.data.forEach(producto => {
-                let rutaImagen = producto.imagen && producto.imagen !== "" 
-                    ? base_url + "uploads/productos/" + producto.imagen 
-                    : base_url + "assets/img/no-image.png";
-
-                let card = document.createElement('div');
-                card.className = 'col';
-                card.innerHTML = `
-                    <div class="card h-100 shadow-sm">
-                        <img src="${rutaImagen}" class="card-img-top" alt="${producto.nombre}" style="height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-primary">${producto.nombre}</h5>
-                            <p class="card-text">${producto.detalle}</p>
-                            <p class="fw-bold text-success">S/ ${parseFloat(producto.precio).toFixed(2)}</p>
-                            <p><span class="badge bg-secondary">Stock: ${producto.stock}</span></p>
-                            <p class="small text-muted">Categoría: ${producto.categoria}</p>
-                            <p class="small text-muted">Proveedor: ${producto.proveedor}</p>
-                            <p class="small">Vence: ${producto.fecha_vencimiento}</p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center gap-2">
-                            <a href="${base_url}edit-product/${producto.id}" class="btn btn-primary btn-sm">Editar</a>
-                            <button class="btn btn-danger btn-sm" onclick="fn_eliminar(${producto.id});">Eliminar</button>
-                        </div>
-                    </div>
-                `;
-                contenedor.appendChild(card);
-            });
-
-            contenido.appendChild(contenedor);
-        } else {
-            contenido.innerHTML = '<p class="text-center text-muted">No hay productos disponibles.</p>';
-        }
-    } catch (e) {
-        console.log('Error al mostrar productos en tarjetas: ' + e);
-    }
-}*/
-
+if (document.getElementById('productos_venta')) {
+    listar_productos();
+}
