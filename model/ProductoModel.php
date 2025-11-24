@@ -19,6 +19,8 @@ class ProductoModel
         }
         return $arr_categorias;
     }
+
+
     public function existeCodigo($codigo)
     {
         $codigo = $this->conexion->real_escape_string($codigo);
@@ -57,9 +59,22 @@ class ProductoModel
         return $sql->fetch_object();
     }
 
-    public function actualizar($id_cat, $nombre, $detalle)
+    //ACTUALIZAR PRODUCTO
+    public function actualizar($id_producto, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $imagen, $id_proveedor)
     {
-        $consulta = "UPDATE producto SET nombre='$nombre', detalle='$detalle' WHERE id='$id_cat'";
+        // Sanitizar y preparar valores
+        $id_producto      = intval($id_producto);
+        $codigo           = $this->conexion->real_escape_string($codigo);
+        $nombre           = $this->conexion->real_escape_string($nombre);
+        $detalle          = $this->conexion->real_escape_string($detalle);
+        $precio           = floatval($precio);
+        $stock            = intval($stock);
+        $id_categoria     = intval($id_categoria);
+        $fecha_vencimiento = $this->conexion->real_escape_string($fecha_vencimiento);
+        $id_proveedor     = intval($id_proveedor);
+        $imagen           = $this->conexion->real_escape_string($imagen);
+
+        $consulta = "UPDATE producto SET codigo='$codigo', nombre='$nombre', detalle='$detalle', precio=$precio, stock=$stock, id_categoria=$id_categoria, fecha_vencimiento='$fecha_vencimiento', imagen='$imagen', id_proveedor=$id_proveedor WHERE id='$id_producto'";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
@@ -69,6 +84,9 @@ class ProductoModel
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
+
+
+    // BUSCAR PRODUCTO POR NOMBRE O CÓDIGO
     public function buscarProductoByNombreOrCodigo($dato)
     {
         $arr_productos = array();
