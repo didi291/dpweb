@@ -49,7 +49,7 @@ if ($tipo === "registrar") {
     }
     $file = $_FILES['imagen'];
     $ext  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $extPermitidas = ['jpg', 'jpeg', 'png'];
+    $extPermitidas = ['jpg', 'jpeg', 'png', 'jfif', 'webp'];
 
     if (!in_array($ext, $extPermitidas)) {
         echo json_encode(['status' => false, 'msg' => 'Formato de imagen no permitido']);
