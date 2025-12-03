@@ -56,11 +56,11 @@
                                     Dropdown
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                    <li><a class="dropdown-item" href="<?= BASE_URL ?>perfil">Perfil</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                    <li><a class="dropdown-item" href="<?= BASE_URL ?>logout">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
