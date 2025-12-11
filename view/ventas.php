@@ -32,13 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody id="lista_compra">
-                                <tr>
-                                    <td>Producto</td>
-                                    <td>1</td>
-                                    <td>$15.00</td>
-                                    <td>$15.00</td>
-                                    <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -64,4 +58,5 @@
             agregar_producto_temporal();
         }
     })
+    listar_temporales();
 </script>
