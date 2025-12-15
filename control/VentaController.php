@@ -23,25 +23,26 @@ if ($tipo == "registrarTemporal") {
     }
     echo json_encode($respuesta);
 }
-if ($tipo = "lista_venta_temporal") {
+if ($tipo=="listar_venta_temporal") {
     $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $b_producto = $objVenta->buscarTemporales();
     if ($b_producto) {
         $respuesta = array('status' => true, 'data' => $b_producto);
-    } else {
-        $respuesta = array('status' => false, 'msg' => 'no hay productos temporales');
+    }else {
+       $respuesta = array('status' => false, 'msg' => 'no se encontraron datos');
     }
     echo json_encode($respuesta);
 }
-if ($tipo="actualizar_cantidad") {
+
+if($tipo=="actualizar_cantidad"){
     $id = $_POST['id'];
-    $cantidad = $_POST['cantidad'];
+    $cantidad =  $_POST['cantidad'];
     $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $consulta = $objVenta->actualizarCantidadTemporalByid($id, $cantidad);
     if ($consulta) {
-        $respuesta = array('status' => true, 'msg' => '');
-    }else{
-        $respuesta = array('status' => false, 'msg' => 'no se pudo actualizar la cantidad');
+        $respuesta = array('status' => true, 'msg' => 'success');
+    }else {
+        $respuesta = array('status' => false, 'msg' => 'error');
     }
     echo json_encode($respuesta);
 }

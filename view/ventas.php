@@ -59,4 +59,5 @@
         }
     })
     listar_temporales();
+    act_subt_general();
 </script>
