@@ -134,29 +134,7 @@ async function edit_product() {
         console.log('oops, ocurrió un error ' + error);
     }
 }
-
-async function actualizarProducto() {
-    const datos = new FormData(frm_edit_product);
-    let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=actualizar', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        body: datos
-    });
-    json = await respuesta.json();
-    if (!json.status) {
-        alert("Oooooops, ocurrio un error al actualizar, intentelo nuevamente");
-        console.log(json.msg);
-        return;
-    } else {
-        alert(json.msg);
-    }
-}
-async function fn_eliminar(id) {
-    if (window.confirm("¿Seguro que quiere eliminar?")) {
-        eliminar(id);
-    }
-}
+ 
 async function eliminar(id_producto) {
     let datos = new FormData();
     datos.append('id_producto', id_producto);
@@ -243,7 +221,7 @@ async function listar_productos() {
                         <h6 class="mb-2 fw-bold" style="font-size:0.95rem;">${producto.nombre}</h6>
                         <p class="text-success fw-bold mb-1">S/ ${producto.precio}</p>
                         <small class="text-muted d-block mb-2">Stock: ${producto.stock}</small>
-                        <button onclick="agregar_producto_venta(${producto.id})" 
+                        <button onclick="agregar_producto_temporal(${producto.id})" 
                                 class="btn btn-primary btn-sm w-100 mb-1">Agregar</button>
                         <button onclick="ver_detalle_producto(${producto.id})" 
                                 class="btn btn-secondary btn-sm w-100">Ver detalle</button>
