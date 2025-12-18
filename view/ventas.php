@@ -73,8 +73,8 @@
                             <input type="hidden" class="form-control" id="id_cliente_venta" name="id_cliente_venta">
                         </div>
                         <div class="col-md-6">
-                            <label for="fecha_venta" class="form-label">Fecha de Venta</label>
-                            <input type="datetime-local" class="form-control" id="fecha_venta" name="fecha_venta" value="<?= date('Y-m-d H:i') ?>"> 
+                            <label for="fecha_venta">Fecha de Venta</label>
+                            <input type="datetime" class="form-control" id="fecha_venta" name="fecha_venta" value="<?= date('Y-m-d H:i') ?>"> 
                         </div>
                 </form>
             </div>

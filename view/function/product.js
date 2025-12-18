@@ -222,7 +222,7 @@ async function listar_productos() {
                         <p class="text-success fw-bold mb-1">S/ ${producto.precio}</p>
                         <small class="text-muted d-block mb-2">Stock: ${producto.stock}</small>
                         <button onclick="agregar_producto_temporal(${producto.id})" 
-                                class="btn btn-primary btn-sm w-100 mb-1">Agregar</button>
+                                class="btn btn-primary btn-sm w-100 mb-1" onclick="agregar_producto_temporal(${producto.id})">Agregar</button>
                         <button onclick="ver_detalle_producto(${producto.id})" 
                                 class="btn btn-secondary btn-sm w-100">Ver detalle</button>
                     </div>

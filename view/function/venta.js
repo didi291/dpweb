@@ -16,10 +16,22 @@ productos_venta[id] = producto;
 productos_venta[id2] = producto2;
 console.log(productos_venta);
 
-async function agregar_producto_temporal(id_product = 0, price = 0) {
-    let id = document.getElementById('id_producto_venta').value;
-    let precio = document.getElementById('producto_precio_venta').value;
-    let cantidad = document.getElementById('producto_cantidad_venta').value;
+async function agregar_producto_temporal(id_product = 0, price = 0, cantidad = 1) {
+    if (id_product == 0) {
+        id_product = document.getElementById('id_producto_venta').value;
+    }else{
+        id = id_product;
+    }
+    if (price == 0) {
+        precio = document.getElementById('producto_precio_venta').value;
+    }else{
+        precio = price;
+    }
+    if (cantidad == 0) {
+        cantidad = document.getElementById('producto_cantidad_venta').value;
+    }else{
+        cantidad = cantidad;
+    }
     const datos = new FormData();
     datos.append('id_producto', id);
     datos.append('precio', precio);
@@ -39,6 +51,7 @@ async function agregar_producto_temporal(id_product = 0, price = 0) {
                 alert("el producto fue actualizado");
             }
         }
+        listar_temporales();
 
     } catch (error) {
         console.log("error en agregar producto temporal " + error);
@@ -131,7 +144,7 @@ async function buscar_cliente_venta() {
         json = await respuesta.json();
         if (json.status) {
             document.getElementById('cliente_nombre').value = json.data.razon_social;
-            document.getElementById('id_cliente').value = json.data.id;
+            document.getElementById('id_cliente_venta').value = json.data.id;
         } else {
             alert(json.msg);
         }
@@ -147,7 +160,7 @@ async function registrarVenta() {
     }
     try {
         const datos = new FormData();
-        datos.append('id_cliente_venta', id_cliente);
+        datos.append('id_cliente', id_cliente);
         datos.append('fecha_venta', fecha_venta);
 
         let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_venta', {
