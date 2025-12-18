@@ -180,3 +180,25 @@ async function registrarVenta() {
         console.log("error al registrar venta " + error);
     }
 }
+async function eliminarTemporal(id_temporal) {
+    const datos = new FormData();
+    datos.append('id', id_temporal);
+    try {
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=eliminar', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        let json = await respuesta.json();
+        if (json.status) {
+            alert(json.msg);
+            listar_temporales();
+        }else{
+            alert(json.msg);
+        }
+    }catch (error) {
+        console.log("error al eliminar temporal " + error);
+    }
+    listar_temporales();
+}

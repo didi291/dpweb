@@ -185,9 +185,10 @@ if ($tipo === "actualizar") {
 
 if ($tipo == "eliminar") {
     //print_r($_POST);
-    $id_producto = $_POST['id_producto'];
-    $respuesta = array('status' => false, 'msg' => '');
-    $resultado = $objProducto->eliminar($id_producto);
+    $respuesta = array('status' => false, 'msg' => 'Fallo el controlador');
+    $id_temporal = $_POST['id'];
+    
+    $resultado = $objVenta->eliminarTemporal($id_temporal);
     if ($resultado) {
         $respuesta = array('status' => true, 'msg' => 'Eliminado Correctamente');
     } else {
